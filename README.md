@@ -5,8 +5,8 @@ A simple Python package containing an implementation of a Priority Expiry Cache.
 A Priority Expiry Cache stores key-value entries. Associated with each entry is an Expire Time and a Priority. 
 
 The Priority Expiry Cache has an `evict` operation. Any expired entries are removed from the cache. If there are no
-expired entries then entry with the lowest priority. If there are multiple entries with the lowest priority, then the
-least recently used of those entries is removed.
+expired entries then entry with the lowest priority is removed. If there are multiple entries with the lowest priority, 
+then the least recently used of those entries is removed.
 
 ## Usage
 ```python
@@ -46,7 +46,7 @@ This has been tested and developed on Python 3.11. The package itself has no oth
 
 ## Running tests
 Test dependencies including [pytest](https://docs.pytest.org) and [hypothesis](https://hypothesis.readthedocs.io) can
-be installed into venv from [requirements.txt](requirements.txt)
+be installed into a venv from [requirements.txt](requirements.txt)
 ```shell
 git clone https://github.com/alect3/priority-expiry-cache
 cd priority-expiry-cache
