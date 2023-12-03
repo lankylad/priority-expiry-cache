@@ -35,7 +35,8 @@ time.sleep(1)
 
 # Evict entries. This removes all remaining entries as they will have all expired.
 cache.evict()
-assert not cache
+# Confirm that the cache is empty
+assert not cache  
 ```
 
 ## Implementation
