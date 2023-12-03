@@ -52,7 +52,7 @@ This has been tested and developed on Python 3.11. The package itself has no oth
 Test dependencies including [pytest](https://docs.pytest.org) and [hypothesis](https://hypothesis.readthedocs.io) can
 be installed into a venv from [requirements.txt](requirements.txt)
 ```shell
-git clone https://github.com/alect3/priority-expiry-cache
+git clone https://github.com/lankylad/priority-expiry-cache
 cd priority-expiry-cache
 python -m venv priority_expiry_cache_venv  # setup venv
 ./priority_expiry_cache_venv/bin/activate  # activate venv
