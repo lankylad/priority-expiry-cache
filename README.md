@@ -23,16 +23,19 @@ with cache.context(priority=10, expiry_duration=int(1e9)):
     cache["third_test_key"] = "third_test_value"
 
 # Retrieve the value of an entry
-value = cache["test_key"]
+value = cache["first_test_key"]
+assert value == "first_test_value"
 
-# Evict entries. This removes the `third_test_key` entry as it is the least recently used 
+# Evict entries. This removes the `second_test_key` entry as it is the least recently used 
 # and no entries have expired yet.
 cache.evict()
+assert set(cache) == {"first_test_key", "third_test_key"}
 
 time.sleep(1)
 
 # Evict entries. This removes all remaining entries as they will have all expired.
 cache.evict()
+assert not cache
 ```
 
 ## Implementation
