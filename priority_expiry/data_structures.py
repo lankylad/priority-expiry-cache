@@ -107,6 +107,10 @@ class Quadtree(Generic[KT, VT]):
         assert node is self._root
         self._root = None
 
+    def clean(self, recurse=False) -> None:
+        """This a no-op. It is here for compatability with the node interface."""
+        return
+
     def prune_expired(self, now: Time) -> bool:
         """Remove expired nodes.
 
@@ -243,7 +247,7 @@ class Node(Generic[KT, VT]):
         else:
             raise Exception("entry unexpectedly missing for lru queue")
         if clean:
-            self.clean()
+            self.clean(recurse=True)
 
     def pop_lru(self) -> KT:
         """Removes and returns the key of the least recently used entry.
@@ -257,7 +261,7 @@ class Node(Generic[KT, VT]):
 
         least_recent = self._lru_queue.popleft()
         del self._data[least_recent.key]
-        self.clean()
+        self.clean(recurse=True)
         return least_recent.key
 
     def access_entry(self, key: KT, now: Time) -> VT:
@@ -372,13 +376,23 @@ class Node(Generic[KT, VT]):
 
         del self.quadrants[self.quadrant_index(node)]
 
-    def clean(self) -> None:
+    def clean(self, recurse=False) -> None:
         """Attempts to remove this node from the Quadtree if it has no
-        entries."""
+        entries.
+
+        Args:
+            recurse: Indicates whether to attempt to clean ancestors after
+                deleting this node. When this node is deleted it possible that
+                the parent may also be able to be cleaned.
+        """
 
         if self.empty:
             if not self.quadrants:
+                parent = self.parent
                 self.parent.delete(self)
+                if recurse:
+                    parent.clean(recurse=True)
+
             if len(self.quadrants) == 1:
                 self.parent.replace(self.quadrants.popitem()[1])
 
